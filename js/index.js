@@ -1,10 +1,3 @@
-//making sure js is connecting
-const heading = document.querySelector('h1');
-console.log(heading);
-heading.addEventListener('click', function() {
-    heading.style.color = 'teal';
-});
-
 //fetching the min and max temp using asynch await
 async function fetchTemp() {
   try {
