@@ -1,3 +1,11 @@
 h1 {
   color: hotpink;
 }
+
+.temperature {
+  background-color: aqua;
+}
+
+.weather-code {
+  background-color: mediumseagreen;
+}
