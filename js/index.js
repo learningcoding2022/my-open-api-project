@@ -53,6 +53,49 @@ const weatherImgMap = {
 
 };
 
+const weatherDescriptionMap = {
+  "0": "Clear sky",
+
+  "1":"Mainly clear, partly cloudy, and overcast",
+  "2":"Mainly clear, partly cloudy, and overcast",
+  "3":"Mainly clear, partly cloudy, and overcast",
+
+  "45":"Fog",
+  "48":"Fog",
+
+  "51":"Drizzle: Light",
+  "53":"Drizzle: Moderate",
+  "55":"Drizzle: Dense",
+
+  "56":"Freezing Drizzle: Light",
+  "57":"Freezing Drizzle: Dense",
+
+  "61":"Rain: Light",
+  "63":"Rain: Moderate",
+  "65":"Rain: Heavy",
+
+  "66":"Freezing Rain: Light",
+  "67":"Freezing Rain: Heavy",
+
+  "71":"Snow: light",
+  "73":"Snow: moderate",
+  "75":"Snow: heavy",
+
+  "77":"Flurries",
+
+  "80":"Rain Showers: Light",
+  "81":"Rain Showers: Moderate",
+  "82":"Rain Showers: Heavy",
+
+  "85":"Snow Shower: Light",
+  "86":"Snow Shower: Heavy",
+  
+  "95":"Thunderstorm: Slight to Moderate",
+
+  "96":"Thunderstorm: Slight Hail",
+  "99":"Thunderstorm: Heavy Hail",
+
+};
 //fetching the min and max temp using asynch await
 async function fetchTemp() {
   try {
@@ -98,6 +141,10 @@ async function fetchWeather() {
       icon.src = fullPath;
       console.log(`Set weather icon: ${fullPath}`);
     }
+
+    const description = weatherDescriptionMap[weatherData];
+    const addDescription = document.getElementById("weather-description");
+    console.log('weatherDescription');
     
   } catch (error) {
     console.error('An error occurred:', error);
