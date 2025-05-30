@@ -8,6 +8,51 @@ const temperature = document.querySelector('#temperature');
 const weatherCode = document.querySelector('#weather-code');
 //console.log('weatherCode');
 
+//weather code paired with corresponding image
+const weatherImgMap = {
+  "0": "sun.png",
+
+  "1":"partly-sunny.png",
+  "2":"partly-sunny.png",
+  "3":"partly-sunny.png",
+
+  "45":"fog.png",
+  "48":"fog.png",
+
+  "51":"drizzle.png",
+  "53":"drizzle.png",
+  "55":"drizzle.png",
+
+  "56":"freezing-drizzle.png",
+  "57":"freezing-drizzle.png",
+
+  "61":"rain.png",
+  "63":"rain.png",
+  "65":"rain.png",
+
+  "66":"freezing-rain.png",
+  "67":"freezing-rain.png",
+
+  "71":"snow.png",
+  "73":"snow.png",
+  "75":"snow.png",
+
+  "77":"light-snow.png",
+
+  "80":"freezing-rain.png",
+  "81":"freezing-rain.png",
+  "82":"freezing-rain.png",
+
+  "85":"snow-shower.png",
+  "86":"snow-shower.png",
+  
+  "95":"thunderstorm.png",
+
+  "96":"severe-thunderstorm.png",
+  "99":"severe-thunderstorm.png",
+
+};
+
 //fetching the min and max temp using asynch await
 async function fetchTemp() {
   try {
@@ -45,70 +90,19 @@ async function fetchWeather() {
     const weatherData = data.daily.weather_code[0];
     console.log('weatherData');
 
-    const weatherImgMap = {
-      "0": "sun.png",
-    
-      "1":"partly-sunny.png",
-      "2":"partly-sunny.png",
-      "3":"partly-sunny.png",
-    
-      "45":"fog.png",
-      "48":"fog.png",
-    
-      "51":"drizzle.png",
-      "53":"drizzle.png",
-      "55":"drizzle.png",
-    
-      "56":"freezing-drizzle.png",
-      "57":"freezing-drizzle.png",
-    
-      "61":"rain.png",
-      "63":"rain.png",
-      "65":"rain.png",
-    
-      "66":"freezing-rain.png",
-      "67":"freezing-rain.png",
-    
-      "71":"snow.png",
-      "73":"snow.png",
-      "75":"snow.png",
-    
-      "77":"light-snow.png",
-    
-      "80":"freezing-rain.png",
-      "81":"freezing-rain.png",
-      "82":"freezing-rain.png",
-    
-      "85":"snow-shower.png",
-      "86":"snow-shower.png",
-      
-      "95":"thunderstorm.png",
-    
-      "96":"severe-thunderstorm.png",
-      "99":"severe-thunderstorm.png",
-    
-    };
-
-    const addWeatherIcon = function () {
-      const imageFilename = weatherImgMap[weatherData];
-      if (imageFilename) {
-        document.getElementById("weatherIcon").src = `css/img/${imageFilename}`;
-      } else {
-        console.warn(`No icon found for weather code: ${weatherData}`);
-      }
-
+    const imageFilename = weatherImgMap[weatherData];
+    const icon = document.getElementById("weatherIcon");
+  
+    if (imageFilename) {
+      const fullPath = `img/${imageFilename}`;
+      icon.src = fullPath;
+      console.log(`Set weather icon: ${fullPath}`);
     }
-
-    addWeatherIcon();
-
-
+    
   } catch (error) {
     console.error('An error occurred:', error);
   }
 }
 
 fetchWeather();
-
-
-
 
