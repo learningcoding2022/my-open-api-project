@@ -49,3 +49,7 @@ h1 {
   width: 50%;
   filter: brightness(0) invert(1);
 }
+
+#add-location {
+  margin-top: 2em;
+}

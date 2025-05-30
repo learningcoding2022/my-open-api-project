@@ -1,5 +1,5 @@
-
-
+document.addEventListener('DOMContentLoaded', () => {
+  // all your JS here, including event listeners
 
 
 
@@ -107,9 +107,9 @@ async function fetchTemp() {
     console.log(data);
 
     const maxTemp = data.daily.temperature_2m_max[0];
-    console.log('maxTemp');
+    console.log(maxTemp);
     const minTemp = data.daily.temperature_2m_min[0];
-    console.log('minTemp');
+    console.log(minTemp);
 
     temperature.innerHTML = `${maxTemp} | ${minTemp}`;
 
@@ -145,6 +145,8 @@ async function fetchWeather() {
     const description = weatherDescriptionMap[weatherData];
     const addDescription = document.getElementById("weather-description");
     console.log('weatherDescription');
+    addDescription.textContent = description;
+
     
   } catch (error) {
     console.error('An error occurred:', error);
@@ -153,3 +155,46 @@ async function fetchWeather() {
 
 fetchWeather();
 
+//need to take text input and provide text output for the location:
+const locationForm = document.getElementById('add-location');
+//console.log('locationForm');
+if (locationForm) {
+locationForm.addEventListener('submit', function(event) {
+  event.preventDefault();
+  const userInputLatitude = event.target.latitude.value;
+  console.log(userInputLatitude);   
+  const userInputLongitude = event.target.longitude.value;
+  console.log(userInputLongitude);
+  const displayLocation = document.createElement('div');
+  displayLocation.innerHTML = `Your Latitude: ${userInputLatitude} <br>Your Longitude ${userInputLongitude}`;
+  
+  const locationInput = document.getElementById('location-input-displayed');
+
+  // Optional: Clear existing content
+  locationInput.innerHTML = '';
+
+  locationInput.appendChild(displayLocation);
+
+});
+}
+
+
+});
+  //reset form
+  //messageForm.reset();
+  //const removeButton = document.createElement('button');
+  //removeButton.innerHTML = 'remove';
+  //removeButton.type = 'button';
+  //removeButton.classList.add('remove-btn');
+
+  //add event listener to removeButton element that handles the "Click" event
+  //removeButton.addEventListener('click', function() {
+    //const entry = removeButton.parentNode;
+    //entry.remove();
+  //});
+
+  //append the removeButton to the newMessage element
+ // newMessage.appendChild(removeButton);
+  //messageList.append(newMessage);
+
+  //messageList
