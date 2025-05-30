@@ -1,12 +1,8 @@
 document.addEventListener('DOMContentLoaded', () => {
-  // all your JS here, including event listeners
-
-
 
 const temperature = document.querySelector('#temperature');
-//console.log('temperature')
 const weatherCode = document.querySelector('#weather-code');
-//console.log('weatherCode');
+let latitude, longitude;
 
 //weather code paired with corresponding image
 const weatherImgMap = {
@@ -96,105 +92,84 @@ const weatherDescriptionMap = {
   "99":"Thunderstorm: Heavy Hail",
 
 };
-//fetching the min and max temp using asynch await
-async function fetchTemp() {
-  try {
-    const response = await fetch('https://api.open-meteo.com/v1/forecast?latitude=35.2271&longitude=-80.8431&daily=temperature_2m_max,temperature_2m_min&timezone=America%2FNew_York&wind_speed_unit=ms&temperature_unit=fahrenheit&precipitation_unit=inch');
-    if (!response.ok) {
+
+//ASYNC FUNCTIONS////////////////////////////////////////////////////
+//FETCH TEMPERATURE
+const locationForm = document.getElementById('add-location');
+if (locationForm) {
+locationForm.addEventListener('submit', function(event) {
+  event.preventDefault();
+  const lat = event.target.latitude.value;
+  const lon = event.target.longitude.value;
+
+  latitude = lat;
+  longitude = lon;
+
+  //display location
+  const displayLocation = document.createElement('div');
+  displayLocation.innerHTML = `Your Latitude: ${lat} <br>Your Longitude: ${lon}`;
+  const locationInput = document.getElementById('location-input-displayed');
+  locationInput.innerHTML = '';
+  locationInput.appendChild(displayLocation);
+
+  fetchTemperature(lat, lon);
+
+  locationForm.reset();
+
+});
+}
+
+  //ASYNC FUNCTIONS///////////////////////////
+
+  async function fetchTemperature(lat, lon) {
+    try {
+    const tempResponse = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&daily=temperature_2m_max,temperature_2m_min&timezone=auto`);
+    if (!tempResponse.ok) {
       throw new Error('Request failed');
     }
-    const data = await response.json();
-    console.log(data);
-
-    const maxTemp = data.daily.temperature_2m_max[0];
-    console.log(maxTemp);
-    const minTemp = data.daily.temperature_2m_min[0];
-    console.log(minTemp);
-
+    const tempData = await tempResponse.json();
+    const maxTemp = tempData.daily.temperature_2m_max[0];
+    const minTemp = tempData.daily.temperature_2m_min[0];
     temperature.innerHTML = `${maxTemp} | ${minTemp}`;
 
   } catch (error) {
-    console.error('An error occurred:', error);
+      console.error('An error occurred:', error);
   }
-}
+  }
 
-fetchTemp();
-
-//fetching the weather code
-async function fetchWeather() {
-  try {
-    const response = await fetch('https://api.open-meteo.com/v1/forecast?latitude=35.2271&longitude=-80.8431&daily=weather_code&timezone=America%2FNew_York&wind_speed_unit=ms&temperature_unit=fahrenheit&precipitation_unit=inch');
-    if (!response.ok) {
-      throw new Error('Request failed');
+  async function fetchWeatherCode(lat, lon) {
+    try {
+    const weatherResponse = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&daily=weather_code&timezone=auto`);
+    if (!weatherResponse.ok) {
+    throw new Error('Request failed');
     }
-    const data = await response.json();
-    console.log(data);
-
-    const weatherData = data.daily.weather_code[0];
-    console.log('weatherData');
-
-    const imageFilename = weatherImgMap[weatherData];
+    const weatherData = await weatherResponse.json();
+    const code = weatherData.daily.weather_code[0];
+    const imageFilename = weatherImgMap[code];
     const icon = document.getElementById("weatherIcon");
+    icon.alt = "Weather icon";
+
+    weatherCode.textContent = weatherDescriptionMap[code];
   
     if (imageFilename) {
       const fullPath = `img/${imageFilename}`;
       icon.src = fullPath;
       console.log(`Set weather icon: ${fullPath}`);
     }
-
-    const description = weatherDescriptionMap[weatherData];
-    const addDescription = document.getElementById("weather-description");
-    console.log('weatherDescription');
-    addDescription.textContent = description;
-
     
-  } catch (error) {
-    console.error('An error occurred:', error);
-  }
-}
+    } catch (error) {
+      console.error('An error occurred:', error);
+    }
+    }
 
-fetchWeather();
+    const getWeatherButton = document.getElementById('get-weather');
+    getWeatherButton.addEventListener('click', function () {
+      if (!latitude || !longitude) {
+        alert('Please enter a location first!');
+        return;
+      }
 
-//need to take text input and provide text output for the location:
-const locationForm = document.getElementById('add-location');
-//console.log('locationForm');
-if (locationForm) {
-locationForm.addEventListener('submit', function(event) {
-  event.preventDefault();
-  const userInputLatitude = event.target.latitude.value;
-  console.log(userInputLatitude);   
-  const userInputLongitude = event.target.longitude.value;
-  console.log(userInputLongitude);
-  const displayLocation = document.createElement('div');
-  displayLocation.innerHTML = `Your Latitude: ${userInputLatitude} <br>Your Longitude ${userInputLongitude}`;
-  
-  const locationInput = document.getElementById('location-input-displayed');
+      fetchWeatherCode(latitude, longitude);
+    });
 
-  // Optional: Clear existing content
-  locationInput.innerHTML = '';
-
-  locationInput.appendChild(displayLocation);
-
-});
-}
-
-
-});
-  //reset form
-  //messageForm.reset();
-  //const removeButton = document.createElement('button');
-  //removeButton.innerHTML = 'remove';
-  //removeButton.type = 'button';
-  //removeButton.classList.add('remove-btn');
-
-  //add event listener to removeButton element that handles the "Click" event
-  //removeButton.addEventListener('click', function() {
-    //const entry = removeButton.parentNode;
-    //entry.remove();
-  //});
-
-  //append the removeButton to the newMessage element
- // newMessage.appendChild(removeButton);
-  //messageList.append(newMessage);
-
-  //messageList
+  });
