@@ -48,7 +48,7 @@ h1 {
 }
 
 #weatherIcon {
-  width: 40%;
+  width: 30%;
   filter: brightness(0) invert(1);
 }
 
@@ -85,4 +85,12 @@ button {
   background-color: #f4c95d;
   font-size: 1em;
   font-weight: bold;
+}
+
+button[type='submit'] {
+  margin-top: 1em;
+}
+
+.hidden {
+  display: none;
 }

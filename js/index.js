@@ -169,7 +169,18 @@ locationForm.addEventListener('submit', function(event) {
         return;
       }
 
-      fetchWeatherCode(latitude, longitude);
-    });
+      const weatherIcon = document.getElementById("weatherIcon");
 
+      if (weatherIcon.classList.contains('hidden')) {
+        fetchWeatherCode(latitude, longitude);
+        getWeatherButton.innerHTML = "close weather code";
+        weatherIcon.classList.remove('hidden');
+        weatherCode.classList.remove('hidden');
+      } else {
+        getWeatherButton.innerHTML = "My Weather Code";
+        weatherIcon.classList.add('hidden');
+        weatherCode.classList.add('hidden');
+      }
   });
+
+});
