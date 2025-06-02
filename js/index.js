@@ -2,6 +2,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
 const temperature = document.querySelector('#temperature');
 const weatherCode = document.querySelector('#weather-code');
+const weatherDescription = document.getElementById("weather-description");
+const icon = document.getElementById("weatherIcon");
 let latitude, longitude;
 
 //weather code paired with corresponding image
@@ -146,10 +148,11 @@ locationForm.addEventListener('submit', function(event) {
     const weatherData = await weatherResponse.json();
     const code = weatherData.daily.weather_code[0];
     const imageFilename = weatherImgMap[code];
-    const icon = document.getElementById("weatherIcon");
+    //const icon = document.getElementById("weatherIcon");
     icon.alt = "Weather icon";
 
     weatherCode.textContent = weatherDescriptionMap[code];
+    //weatherDescription.textContent = weatherDescriptionMap[code];
   
     if (imageFilename) {
       const fullPath = `img/${imageFilename}`;
@@ -169,17 +172,19 @@ locationForm.addEventListener('submit', function(event) {
         return;
       }
 
-      const weatherIcon = document.getElementById("weatherIcon");
+      //const weatherIcon = document.getElementById("weatherIcon");
 
-      if (weatherIcon.classList.contains('hidden')) {
+      if (icon.classList.contains('hidden')) {
         fetchWeatherCode(latitude, longitude);
         getWeatherButton.innerHTML = "close weather code";
-        weatherIcon.classList.remove('hidden');
+        icon.classList.remove('hidden');
         weatherCode.classList.remove('hidden');
+        weatherDescription.classList.remove('hidden');
       } else {
         getWeatherButton.innerHTML = "My Weather Code";
-        weatherIcon.classList.add('hidden');
+        icon.classList.add('hidden');
         weatherCode.classList.add('hidden');
+        weatherDescription.classList.add('hidden');
       }
   });
 
