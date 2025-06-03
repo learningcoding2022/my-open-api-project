@@ -139,7 +139,11 @@ locationForm.addEventListener('submit', function(event) {
     console.log(tempData);
     const maxTemp = tempData.daily.temperature_2m_max[0];
     const minTemp = tempData.daily.temperature_2m_min[0];
-    temperature.innerHTML = `${maxTemp}° | ${minTemp}°`;
+    temperature.innerHTML = `${maxTemp}°F | ${minTemp}°F`;
+    
+    icon.classList.add('hidden');
+    weatherDescription.classList.add('hidden');
+    getWeatherButton.innerHTML = "My Weather Code";
 
   } catch (error) {
       console.error('An error occurred:', error);
