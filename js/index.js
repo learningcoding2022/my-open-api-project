@@ -101,8 +101,11 @@ const locationForm = document.getElementById('add-location');
 if (locationForm) {
 locationForm.addEventListener('submit', function(event) {
   event.preventDefault();
-  const lat = event.target.latitude.value;
-  const lon = event.target.longitude.value;
+  //const lat = event.target.latitude.value;
+  //const lon = event.target.longitude.value;
+  const lat = event.target.latitude.value.trim();
+  const lon = event.target.longitude.value.trim();
+
 
   latitude = lat;
   longitude = lon;
@@ -125,14 +128,18 @@ locationForm.addEventListener('submit', function(event) {
 
   async function fetchTemperature(lat, lon) {
     try {
-    const tempResponse = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&daily=temperature_2m_max,temperature_2m_min&timezone=auto`);
+    //const tempResponse = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&daily=temperature_2m_max,temperature_2m_min&timezone=auto`);
+    const tempResponse = await fetch (`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&daily=temperature_2m_max,temperature_2m_min&timezone=auto&wind_speed_unit=mph&temperature_unit=fahrenheit&precipitation_unit=inch`)
+
     if (!tempResponse.ok) {
       throw new Error('Request failed');
     }
+
     const tempData = await tempResponse.json();
+    console.log(tempData);
     const maxTemp = tempData.daily.temperature_2m_max[0];
     const minTemp = tempData.daily.temperature_2m_min[0];
-    temperature.innerHTML = `${maxTemp} | ${minTemp}`;
+    temperature.innerHTML = `${maxTemp}° | ${minTemp}°`;
 
   } catch (error) {
       console.error('An error occurred:', error);
@@ -151,7 +158,7 @@ locationForm.addEventListener('submit', function(event) {
     //const icon = document.getElementById("weatherIcon");
     icon.alt = "Weather icon";
 
-    weatherCode.textContent = weatherDescriptionMap[code];
+    weatherDescription.textContent = weatherDescriptionMap[code];
     //weatherDescription.textContent = weatherDescriptionMap[code];
   
     if (imageFilename) {

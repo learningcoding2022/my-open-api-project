@@ -53,8 +53,10 @@ h1 {
 }
 
 #weather-description {
-  margin-top: 2em;
-  font-size: 1.5em;
+  margin-top: 0.25em;
+  margin-bottom: 1em;
+  font-size: 1.25em;
+  text-align: center;
 }
 
 #my-location {
