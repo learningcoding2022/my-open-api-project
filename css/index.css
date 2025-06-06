@@ -18,6 +18,7 @@ h1 {
   color: white;
   font-size: 2.5em;
   text-align: center;
+  margin: 0.5em;
 }
 
 #main {
@@ -25,16 +26,74 @@ h1 {
   color: white;
 }
 
+#weather-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 #temperature {
-  margin-top: 1.5em;
+  margin-top: 1em;
+  margin-bottom: 1em;
   font-size: 2em;
   display: flex;
   justify-content: center;
 }
 
 #weather-code {
-  margin-top: 1.5em;
-  font-size: 2em;
+  margin-top: 1em;
+  font-size: 1em;
   display: flex;
   justify-content: center;
+}
+
+#weatherIcon {
+  width: 30%;
+  filter: brightness(0) invert(1);
+}
+
+#weather-description {
+  margin-top: 1em;
+  margin-bottom: 1em;
+  font-size: 1.25em;
+  text-align: center;
+  width: 80%;
+}
+
+#my-location {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+#add-location {
+  margin-top: 2em;
+  gap: 20px;
+}
+
+#latitude {
+  border-radius: 8px;
+  padding: 0.5em;
+}
+
+#longitude {
+  border-radius: 8px;
+  padding: 0.5em;
+}
+
+button {
+  border-radius: 8px;
+  padding: 0.75em;
+  background-color: #f4c95d;
+  font-size: 1em;
+  font-weight: bold;
+}
+
+button[type='submit'] {
+  margin-top: 1em;
+}
+
+.hidden {
+  display: none;
 }

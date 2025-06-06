@@ -20,8 +20,29 @@
     <section id="main">
       <h1>Weather App</h1>
       <div id="weather-card">
+        <div id="my-location">
+          <h2>My Location:</h2>
+          <div id="location-input-displayed"></div>
+
+          <form name="add-location" id="add-location">
+            <label for="latitude">Latitude:</label><br />
+            <input type="text" name="latitude" id="latitude" required /><br />
+            <label for="longitude">Longitude:</label><br />
+            <input type="text" name="longitude" id="longitude" required /><br />
+            <button type="submit">Get Temperature</button>
+          </form>
+        </div>
+
         <div id="temperature"></div>
-        <div id="weather-code"></div>
+        <img
+          id="weatherIcon"
+          class="hidden"
+          src="img/default.png"
+          alt="Weather Icon"
+        />
+        <div id="weather-code" class="hidden"></div>
+        <div id="weather-description" class="hidden"></div>
+        <button id="get-weather">My Weather Code</button>
       </div>
     </section>
 
